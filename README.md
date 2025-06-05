@@ -1,6 +1,6 @@
 ### Responsibility
 
-**PandasAI Agent** helps you answer data-related questions about Excel or CSV files using a local LLM (e.g., Llama 3.1) via PandasAI. Simply provide the file path and your natural language question—the agent will query the data and return the answer.
+**PandasAI Agent** helps you answer data-related questions about Excel or CSV files using a local LLM (e.g., Qwen3) via PandasAI. Simply provide the file path and your natural language question—the agent will query the data and return the answer.
 
 ### Details
 
