@@ -2,21 +2,16 @@ import asyncio
 import os
 import json
 import logging
-from typing import List
 from langchain_mcp_adapters.client import MultiServerMCPClient
 from langchain.prompts import ChatPromptTemplate
-from langchain_openai import ChatOpenAI
 from langchain.agents import create_tool_calling_agent, AgentExecutor
 from langchain_core.tools import tool
-from langchain.memory import ConversationSummaryMemory
-from langchain_core.memory import BaseMemory
 from dotenv import load_dotenv
 from anyio import ClosedResourceError
 import urllib.parse
-import subprocess
 from pandasai import SmartDataframe
 from pandasai.llm.local_llm import LocalLLM
-
+from langchain_ollama import ChatOllama
 
 # Setup logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -48,7 +43,7 @@ def query_xlsx_with_llama(
     file_path: str,
     question: str,
     api_base: str = "http://localhost:11434/v1",
-    model: str = "llama3.1:latest"
+    model: str = "qwen3:latest"
 ) -> str:
     """
     Query an Excel file using a local LLM via PandasAI.
@@ -79,64 +74,6 @@ def query_xlsx_with_llama(
     except Exception as e:
         raise Exception(f"Failed to process query '{question}' on '{file_path}': {str(e)}")
 
-
-
-class HeadSummaryMemory(BaseMemory):
-    def __init__(self, llm, head_n=3):
-        super().__init__()
-        self.head_n = head_n
-        self._messages = []
-        self.summary_memory = ConversationSummaryMemory(llm=llm)
-
-    def save_context(self, inputs, outputs):
-        user_msg = inputs.get("input") or next(iter(inputs.values()), "")
-        ai_msg = outputs.get("output") or next(iter(outputs.values()), "")
-        self._messages.append({"input": user_msg, "output": ai_msg})
-        if len(self._messages) > self.head_n:
-            self.summary_memory.save_context(inputs, outputs)
-
-    def load_memory_variables(self, inputs):
-        messages = []
-        
-        for i in range(min(self._head_n, len(self._messages))):
-            msg = self._messages[i]
-            messages.append(HumanMessage(content=msg['input']))
-            messages.append(AIMessage(content=msg['output']))
-        # summary
-        if len(self._messages) > self._head_n:
-            summary_var = self.summary_memory.load_memory_variables(inputs).get("history", [])
-            if summary_var:
-                
-                if isinstance(summary_var, str):
-                    messages.append(HumanMessage(content="[Earlier Summary]\n" + summary_var))
-                elif isinstance(summary_var, list):
-                    messages.extend(summary_var)
-        return {"history": messages}
-
-    def clear(self):
-        self._messages.clear()
-        self.summary_memory.clear()
-
-    @property
-    def memory_variables(self):
-        return {"history"}
-    
-    @property
-    def head_n(self):
-        return self._head_n
-
-    @head_n.setter
-    def head_n(self, value):
-        self._head_n = value
-
-    @property
-    def summary_memory(self):
-        return self._summary_memory
-
-    @summary_memory.setter
-    def summary_memory(self, value):
-        self._summary_memory = value
-
 async def create_pandasai_agent(client, tools):
     prompt = ChatPromptTemplate.from_messages([
         ("system", f"""You are `pandasai_agent`, responsible for answering data-related questions about Excel or CSV files using only the available tools. Follow this workflow:
@@ -158,31 +95,18 @@ async def create_pandasai_agent(client, tools):
         ("placeholder", "{agent_scratchpad}")
     ])
 
-    model = ChatOpenAI(
-        model="gpt-4.1-2025-04-14",
-        api_key=os.getenv("OPENAI_API_KEY"),
-        temperature=0.3,
-        max_tokens=32768
+    model = ChatOllama(
+        model="qwen3:latest",  
+        base_url="http://localhost:11434",  # default Ollama port
+        temperature=0.7,
     )
 
-    '''model = ChatGroq(
-        model="llama-3.3-70b-versatile",
-        temperature=0.3
-    )'''
-
-    memory = HeadSummaryMemory(llm=model, head_n=4)
-
-
     agent = create_tool_calling_agent(model, tools, prompt)
-    return AgentExecutor(agent=agent, tools=tools, memory=memory, max_iterations=100 ,verbose=True)
+    return AgentExecutor(agent=agent, tools=tools, max_iterations=100 ,verbose=True)
 
 async def main():
     max_retries = 5
     retry_delay = 5  # seconds
-
-    github_token = os.getenv("GITHUB_ACCESS_TOKEN")
-    if not github_token:
-        raise ValueError("GITHUB_PERSONAL_ACCESS_TOKEN environment variable is required")
 
     for attempt in range(max_retries):
         try:
