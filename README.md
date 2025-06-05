@@ -6,7 +6,7 @@
 
 * Framework: LangChain
 * Tools used: PandasAI Tools, Coral MCP Tools
-* AI model: OpenAI GPT-4.1 / Llama3.1 via Ollama
+* AI model: Qwen3
 * Date added: 04/06/25
 * Licence: MIT
 
@@ -15,24 +15,64 @@
 Install all required packages:
 
 ```bash
-pip install langchain langchain_mcp_adapters langchain_openai pandasai python-dotenv anyio
+pip install langchain langchain_mcp_adapters langchain_ollama pandasai python-dotenv anyio
 pip install pandas openpyxl
 ```
 
-### Configure Environment Variables
+### Install and Run Ollama (for Local LLM)
+
+PandasAI Agent uses Ollama to run local LLM Qwen3. Please make sure you have Ollama installed and the desired model downloaded before running the agent.
+
+**Step 1: Install Ollama**
+
+* **Linux/macOS:**
+  Follow the official instructions: [https://ollama.com/download](https://ollama.com/download)
+  Or run:
+
+  ```bash
+  curl -fsSL https://ollama.com/install.sh | sh
+  ```
+
+* **Windows:**
+  Download the installer from [Ollama’s website](https://ollama.com/download).
+
+**Step 2: Download Qwen3 model**
+
+To pull the latest Qwen3 model:
 
 ```bash
-export OPENAI_API_KEY=sk-xxx
+ollama pull qwen3:latest
 ```
 
-**How to obtain API keys:**
+**Step 3: Start Ollama Service**
 
-* **OPENAI\_API\_KEY:**
-  Sign up at [platform.openai.com](https://platform.openai.com/), go to “API Keys” under your account, and click “Create new secret key.”
+Ollama usually starts automatically. If not, start it manually:
+
+```bash
+ollama serve
+```
+
+**Step 4: Verify the model is running**
+
+You can check with:
+
+```bash
+ollama list
+```
+
+and
+
+```bash
+ollama run qwen3:latest
+```
+
+Make sure no errors occur and Ollama is running at `http://localhost:11434`.
+
+---
 
 ### Run agent command
 
-Make sure Pllama is running in your local machine, then run:
+Make sure Ollama is running in your local machine, then run:
 
 ```bash
 python 1-langchain-pandasai-agent.py
