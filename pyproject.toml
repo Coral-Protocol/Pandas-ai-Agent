@@ -1,0 +1,17 @@
+[project]
+name = "pandas-ai-agent"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "anyio>=4.9.0",
+    "langchain>=0.3.25",
+    "langchain-mcp-adapters==0.0.10",
+    "langchain-ollama>=0.3.3",
+    "langchain-openai>=0.3.21",
+    "numpy==1.23.5",
+    "openpyxl>=3.1.5",
+    "pandasai>=2.3.0",
+    "python-dotenv>=1.1.0",
+]
