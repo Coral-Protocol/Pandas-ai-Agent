@@ -1,23 +1,14 @@
 ### Responsibility
 
-**PandasAI Agent** helps you answer data-related questions about Excel or CSV files using a local LLM (e.g., Qwen3) via PandasAI. Simply provide the file path and your natural language question—the agent will query the data and return the answer.
+**PandasAI Agent** helps you answer data-related questions about Excel or CSV files using a local LLM (e.g., Llama 3.1/Qwen3) via PandasAI. Simply provide the file path and your natural language question—the agent will query the data and return the answer.
 
 ### Details
 
 * Framework: LangChain
 * Tools used: PandasAI Tools, Coral MCP Tools
-* AI model: Qwen3
+* AI model: Llama3.1/Qwen3 via Ollama
 * Date added: 04/06/25
 * Licence: MIT
-
-### Install Dependencies
-
-Install all required packages:
-
-```bash
-pip install langchain langchain_mcp_adapters langchain_ollama pandasai python-dotenv anyio
-pip install pandas openpyxl
-```
 
 ### Install and Run Ollama (for Local LLM)
 
@@ -36,9 +27,13 @@ PandasAI Agent uses Ollama to run local LLM Qwen3. Please make sure you have Oll
 * **Windows:**
   Download the installer from [Ollama’s website](https://ollama.com/download).
 
-**Step 2: Download Qwen3 model**
+**Step 2: Download Local model**
 
-To pull the latest Qwen3 model:
+To pull the latest llama3.1/Qwen3 model:
+
+```bash
+ollama pull llama3.1:latest
+```
 
 ```bash
 ollama pull qwen3:latest
@@ -60,22 +55,37 @@ You can check with:
 ollama list
 ```
 
-and
-
-```bash
-ollama run qwen3:latest
-```
-
 Make sure no errors occur and Ollama is running at `http://localhost:11434`.
 
 ---
 
-### Run agent command
-
-Make sure Ollama is running in your local machine, then run:
-
+## Clone & Install Dependencies
+Clone the repository:
 ```bash
-python 1-langchain-pandasai-agent.py
+git clone https://github.com/Coral-Protocol/Pandas-ai-Agent.git
+```
+
+Navigate to the project directory:
+```bash
+cd Pandas-ai-Agent
+```
+
+Install `uv`:
+```bash
+pip install uv
+```
+
+Install dependencies from `pyproject.toml` using `uv`:
+```bash
+uv sync
+```
+
+This command will read the `pyproject.toml` file and install all specified dependencies in a virtual environment managed by `uv`.
+
+## Run Agent
+Run the agent using `uv`:
+```bash
+uv run 1-langchain-pandasai-agent.py
 ```
 
 ### Example output
@@ -85,13 +95,14 @@ Question: What are the total number of columns in the coral_public_repo_docs.xls
 Answer: The total number of columns in the coral_public_repo_docs.xlsx is 4.
 ```
 
-**🎬 [Watch Video Demo](https://youtu.be/4pa4M5uUV84)**
+**🎬 [Watch Video Demo](https://youtu.be/aq6du6XRzGE)**
 
 ### Creator details
 
 * Name: Xinxing
 * Affiliation: Coral Protocol
 * Contact: xinxing@coralprotocol.org
+
 
 
 
