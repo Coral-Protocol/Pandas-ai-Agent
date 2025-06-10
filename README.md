@@ -60,6 +60,68 @@ Make sure no errors occur and Ollama is running at `http://localhost:11434`.
 ---
 
 ## Clone & Install Dependencies
+
+1. Run [Coral Server](https://github.com/Coral-Protocol/coral-server)
+<details>
+
+
+This agent runs on Coral Server, follow the instrcutions below to run the server. In a new terminal clone the repository:
+
+
+```bash
+git clone https://github.com/Coral-Protocol/coral-server.git
+```
+
+Navigate to the project directory:
+```bash
+cd coral-server
+```
+Run the server
+```bash
+./gradlew run
+```
+</details>
+
+2. Run [Interface Agent](https://github.com/Coral-Protocol/Coral-Interface-Agent)
+<details>
+
+
+If you are trying to run Open Deep Research agent and require an input, you can either create your agent which communicates on the coral server or run and register the Interface Agent on the Coral Server. In a new terminal clone the repository:
+
+
+```bash
+git clone https://github.com/Coral-Protocol/Coral-Interface-Agent.git
+```
+Navigate to the project directory:
+```bash
+cd Coral-Interface-Agent
+```
+
+Install `uv`:
+```bash
+pip install uv
+```
+Install dependencies from `pyproject.toml` using `uv`:
+```bash
+uv sync
+```
+
+Configure API Key
+```bash
+export OPENAI_API_KEY=
+```
+
+Run the agent using `uv`:
+```bash
+uv run python 0-langchain-interface.py
+```
+
+</details>
+
+3. Agent Installation
+
+<details>
+
 Clone the repository:
 ```bash
 git clone https://github.com/Coral-Protocol/Pandas-ai-Agent.git
@@ -80,7 +142,14 @@ Install dependencies from `pyproject.toml` using `uv`:
 uv sync
 ```
 
+Copy the client sse.py from utils to mcp package
+```bash
+cp -r utils/sse.py .venv/lib/python3.10/site-packages/mcp/client/sse.py
+```
+
 This command will read the `pyproject.toml` file and install all specified dependencies in a virtual environment managed by `uv`.
+
+</details>
 
 ## Run Agent
 Run the agent using `uv`:
@@ -101,8 +170,4 @@ Answer: The total number of columns in the coral_public_repo_docs.xlsx is 4.
 
 * Name: Xinxing
 * Affiliation: Coral Protocol
-* Contact: xinxing@coralprotocol.org
-
-
-
-
+* Contact: [Discord](https://discord.com/invite/Xjm892dtt3)
