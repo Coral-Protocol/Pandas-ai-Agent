@@ -142,10 +142,11 @@ cp -r utils\sse.py .venv\Lib\site-packages\mcp\client\sse.py
 ### 3.Run Agent
 
 <details>
+  
 Run the agent using `uv`:
   
 ```bash
-uv run 1-langchain-pandasai-agent.py
+uv run 1-langchain-PandasAiAgent.py
 ```
 </details>
 
