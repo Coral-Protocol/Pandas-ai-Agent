@@ -101,7 +101,7 @@ uv run python 0-langchain-interface.py
 
 </details>
 
-### 3.Agent Installation
+Agent Installation
 
 <details>
 
@@ -139,7 +139,7 @@ cp -r utils\sse.py .venv\Lib\site-packages\mcp\client\sse.py
 
 </details>
 
-### 4.Run Agent
+### 3.Run Agent
 
 <details>
 Run the agent using `uv`:
@@ -149,7 +149,7 @@ uv run 1-langchain-pandasai-agent.py
 ```
 </details>
 
-### 5.Example 
+### 4.Example 
 
 <details>
 Input:
