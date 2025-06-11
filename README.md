@@ -1,8 +1,8 @@
-### Responsibility
+## Responsibility
 
 **PandasAI Agent** helps you answer data-related questions about Excel or CSV files using a local LLM (e.g., Llama 3.1/Qwen3) via PandasAI. Simply provide the file path and your natural language question—the agent will query the data and return the answer.
 
-### Details
+## Details
 
 * Framework: LangChain
 * Tools used: PandasAI Tools, Coral MCP Tools
@@ -10,7 +10,11 @@
 * Date added: 04/06/25
 * Licence: MIT
 
-### Install and Run Ollama (for Local LLM)
+## Use the Agent
+
+### 1.Install and Run Ollama (for Local LLM)
+
+<details>
 
 PandasAI Agent uses Ollama to run local LLM Qwen3. Please make sure you have Ollama installed and the desired model downloaded before running the agent.
 
@@ -57,32 +61,11 @@ ollama list
 
 Make sure no errors occur and Ollama is running at `http://localhost:11434`.
 
----
-
-## Clone & Install Dependencies
-
-1. Run [Coral Server](https://github.com/Coral-Protocol/coral-server)
-<details>
-
-
-This agent runs on Coral Server, follow the instrcutions below to run the server. In a new terminal clone the repository:
-
-
-```bash
-git clone https://github.com/Coral-Protocol/coral-server.git
-```
-
-Navigate to the project directory:
-```bash
-cd coral-server
-```
-Run the server
-```bash
-./gradlew run
-```
 </details>
 
-2. Run [Interface Agent](https://github.com/Coral-Protocol/Coral-Interface-Agent)
+### 2.Clone & Install Dependencies
+
+Run [Interface Agent](https://github.com/Coral-Protocol/Coral-Interface-Agent)
 <details>
 
 
@@ -118,7 +101,7 @@ uv run python 0-langchain-interface.py
 
 </details>
 
-3. Agent Installation
+### 3.Agent Installation
 
 <details>
 
@@ -156,22 +139,34 @@ cp -r utils\sse.py .venv\Lib\site-packages\mcp\client\sse.py
 
 </details>
 
-## Run Agent
+### 4.Run Agent
+
+<details>
 Run the agent using `uv`:
 ```bash
 uv run 1-langchain-pandasai-agent.py
 ```
+</details>
 
-### Example output
+### 5.Example 
+
+</details>
+Input:
 
 ```bash
 Question: What are the total number of columns in the coral_public_repo_docs.xlsx
+```
+Output:
+
+```bash
 Answer: The total number of columns in the coral_public_repo_docs.xlsx is 4.
 ```
 
 **🎬 [Watch Video Demo](https://youtu.be/aq6du6XRzGE)**
 
-### Creator details
+</details>
+
+## Creator details
 
 * Name: Xinxing
 * Affiliation: Coral Protocol
