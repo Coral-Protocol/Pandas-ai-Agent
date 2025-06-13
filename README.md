@@ -1,166 +1,144 @@
-## Responsibility
+## [PandasAI Agent](https://github.com/Coral-Protocol/Pandas-ai-Agent)
 
-**PandasAI Agent** helps you answer data-related questions about Excel or CSV files using a local LLM (e.g., Llama 3.1/Qwen3) via PandasAI. Simply provide the file path and your natural language question—the agent will query the data and return the answer.
+The PandasAI Agent helps you answer data-related questions about Excel or CSV files using a local LLM (e.g., Llama 3.1/Qwen3) via PandasAI. Simply provide the file path and your natural language question—the agent will query the data and return the answer.
+
+## Responsibility
+The PandasAI Agent enables natural language querying of tabular data (Excel/CSV) using a local LLM through PandasAI, making data analysis accessible and conversational.
 
 ## Details
-
-* Framework: LangChain
-* Tools used: PandasAI Tools, Coral MCP Tools
-* AI model: Llama3.1/Qwen3 via Ollama
-* Date added: 04/06/25
-* Licence: MIT
+- **Framework**: LangChain
+- **Tools used**: PandasAI Tools, Coral MCP Tools
+- **AI model**: Llama3.1/Qwen3 via Ollama
+- **Date added**: 04/06/25
+- **Reference**: [PandasAI Agent](https://pandas-ai.com/)
+- **License**: MIT
 
 ## Use the Agent
 
-### 1.Install and Run Ollama (for Local LLM)
-
+### 1. Install and Run Ollama (for Local LLM)
 <details>
 
-PandasAI Agent uses Ollama to run local LLM Qwen3. Please make sure you have Ollama installed and the desired model downloaded before running the agent.
+PandasAI Agent uses Ollama to run local LLMs. Please make sure you have Ollama installed and the desired model downloaded before running the agent.
 
 **Step 1: Install Ollama**
 
-* **Linux/macOS:**
+- **Linux/macOS:**
   Follow the official instructions: [https://ollama.com/download](https://ollama.com/download)
   Or run:
-
   ```bash
   curl -fsSL https://ollama.com/install.sh | sh
   ```
-
-* **Windows:**
-  Download the installer from [Ollama’s website](https://ollama.com/download).
+- **Windows:**
+  Download the installer from [Ollama's website](https://ollama.com/download).
 
 **Step 2: Download Local model**
 
-To pull the latest llama3.1/Qwen3 model:
-
 ```bash
 ollama pull llama3.1:latest
-```
-
-```bash
 ollama pull qwen3:latest
 ```
 
 **Step 3: Start Ollama Service**
 
 Ollama usually starts automatically. If not, start it manually:
-
 ```bash
 ollama serve
 ```
 
 **Step 4: Verify the model is running**
 
-You can check with:
-
 ```bash
 ollama list
 ```
-
 Make sure no errors occur and Ollama is running at `http://localhost:11434`.
 
 </details>
 
-### 2.Clone & Install Dependencies
-
-Run [Interface Agent](https://github.com/Coral-Protocol/Coral-Interface-Agent)
+### 2. Run [Interface Agent](https://github.com/Coral-Protocol/Coral-Interface-Agent)
 <details>
 
-
-If you are trying to run Open Deep Research agent and require an input, you can either create your agent which communicates on the coral server or run and register the Interface Agent on the Coral Server. In a new terminal clone the repository:
-
+The Interface Agent is required to interact with the PandasAI Agent. In a new terminal, clone the repository:
 
 ```bash
+# Clone the Interface Agent repository
 git clone https://github.com/Coral-Protocol/Coral-Interface-Agent.git
-```
-Navigate to the project directory:
-```bash
+
+# Navigate to the project directory
 cd Coral-Interface-Agent
-```
 
-Install `uv`:
-```bash
+# Install `uv`:
 pip install uv
-```
-Install dependencies from `pyproject.toml` using `uv`:
-```bash
+
+# Install dependencies from `pyproject.toml` using `uv`:
 uv sync
-```
 
-Configure API Key
-```bash
-export OPENAI_API_KEY=
-```
-
-Run the agent using `uv`:
-```bash
+# Run the agent using `uv`:
 uv run python 0-langchain-interface.py
 ```
-
 </details>
 
-Agent Installation
-
+### 3. Run PandasAI Agent
 <details>
 
-Clone the repository:
+In a new terminal, clone the repository:
+
 ```bash
+# Clone the PandasAI Agent repository
 git clone https://github.com/Coral-Protocol/Pandas-ai-Agent.git
-```
 
-Navigate to the project directory:
-```bash
+# Navigate to the project directory
 cd Pandas-ai-Agent
-```
 
-Install `uv`:
-```bash
+# Install `uv`:
 pip install uv
-```
 
-Install dependencies from `pyproject.toml` using `uv`:
-```bash
+# Install dependencies from `pyproject.toml` using `uv`:
 uv sync
 ```
-
 This command will read the `pyproject.toml` file and install all specified dependencies in a virtual environment managed by `uv`.
 
-Copy the client sse.py from utils to mcp package
+Copy the client sse.py from utils to mcp package (Linux/Mac):
 ```bash
 cp -r utils/sse.py .venv/lib/python3.10/site-packages/mcp/client/sse.py
 ```
-
-OR Copy this for windows
+OR for Windows:
 ```bash
 cp -r utils\sse.py .venv\Lib\site-packages\mcp\client\sse.py
 ```
+</details>
+
+### 4. Configure Environment Variables
+<details>
+
+Get the API Key:
+[OpenAI](https://platform.openai.com/api-keys)
+
+Create a .env file in the project root:
+```bash
+cp -r env_sample .env
+```
+
+Add your API keys and any other required environment variables to the .env file.
 
 </details>
 
-### 3.Run Agent
-
+### 5. Run Agent
 <details>
-  
+
 Run the agent using `uv`:
-  
 ```bash
 uv run 1-langchain-PandasAiAgent.py
 ```
 </details>
 
-### 4.Example 
-
+### 6. Example
 <details>
-Input:
 
 ```bash
+# Input:
 Question: What are the total number of columns in the coral_public_repo_docs.xlsx
-```
-Output:
 
-```bash
+# Output:
 Answer: The total number of columns in the coral_public_repo_docs.xlsx is 4.
 ```
 
@@ -168,8 +146,7 @@ Answer: The total number of columns in the coral_public_repo_docs.xlsx is 4.
 
 </details>
 
-## Creator details
-
-* Name: Xinxing
-* Affiliation: Coral Protocol
-* Contact: [Discord](https://discord.com/invite/Xjm892dtt3)
+## Creator Details
+- **Name**: Xinxing
+- **Affiliation**: Coral Protocol
+- **Contact**: [Discord](https://discord.com/invite/Xjm892dtt3)
