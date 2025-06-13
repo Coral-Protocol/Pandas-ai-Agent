@@ -109,40 +109,38 @@ async def main():
     retry_delay = 5  # seconds
 
     for attempt in range(max_retries):
-        try:
-            async with MultiServerMCPClient(
-                connections = {
-                    "coral": {
-                        "transport": "sse", 
-                        "url": MCP_SERVER_URL, 
-                        "timeout": 600, 
-                        "sse_read_timeout": 600
-                    }
+        client = MultiServerMCPClient(
+            connections={
+                "coral": {
+                    "transport": "sse",
+                    "url": MCP_SERVER_URL,
+                    "timeout": 600,
+                    "sse_read_timeout": 600,
                 }
-            ) as client:
-                logger.info(f"Connected to MCP server at {MCP_SERVER_URL}")
-                coral_tool_names = [
-                    "list_agents",
-                    "create_thread",
-                    "add_participant",
-                    "remove_participant",
-                    "close_thread",
-                    "send_message",
-                    "wait_for_mentions",
-                ]
+            }
+        )
+        try:
+            logger.info(f"Connecting to MCP server at {MCP_SERVER_URL}")
 
-                tools = client.get_tools()
+            tools = await client.get_tools()
+            coral_tool_names = [
+                "list_agents",
+                "create_thread",
+                "add_participant",
+                "remove_participant",
+                "close_thread",
+                "send_message",
+                "wait_for_mentions",
+            ]
+            tools = [tool for tool in tools if tool.name in coral_tool_names]
+            tools += [query_xlsx_with_llama]
 
-                tools = [
-                    tool for tool in tools
-                    if tool.name in coral_tool_names
-                ]
+            logger.info(f"Tools Description:\n{get_tools_description(tools)}")
 
-                tools += [query_xlsx_with_llama]
+            agent_executor = await create_pandasai_agent(client, tools)
+            await agent_executor.ainvoke({})
 
-                logger.info(f"Tools Description:\n{get_tools_description(tools)}")
-                agent_executor = await create_pandasai_agent(client, tools)
-                await agent_executor.ainvoke({})
+            break
 
         except ClosedResourceError as e:
             logger.error(f"ClosedResourceError on attempt {attempt + 1}: {e}")
@@ -153,6 +151,7 @@ async def main():
             else:
                 logger.error("Max retries reached. Exiting.")
                 raise
+
         except Exception as e:
             logger.error(f"Unexpected error on attempt {attempt + 1}: {e}")
             if attempt < max_retries - 1:
