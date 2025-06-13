@@ -54,33 +54,11 @@ Make sure no errors occur and Ollama is running at `http://localhost:11434`.
 
 </details>
 
-### 2. Run [Interface Agent](https://github.com/Coral-Protocol/Coral-Interface-Agent)
-<details>
+### 2. Clone & Install Dependencies
 
-The Interface Agent is required to interact with the PandasAI Agent. In a new terminal, clone the repository:
+<details>  
 
-```bash
-# Clone the Interface Agent repository
-git clone https://github.com/Coral-Protocol/Coral-Interface-Agent.git
-
-# Navigate to the project directory
-cd Coral-Interface-Agent
-
-# Install `uv`:
-pip install uv
-
-# Install dependencies from `pyproject.toml` using `uv`:
-uv sync
-
-# Run the agent using `uv`:
-uv run python 0-langchain-interface.py
-```
-</details>
-
-### 3. Run PandasAI Agent
-<details>
-
-In a new terminal, clone the repository:
+Ensure that the [Coral Server](https://github.com/Coral-Protocol/coral-server) is running on your system and the [Interface Agent](https://github.com/Coral-Protocol/Coral-Interface-Agent) is running on the Coral Server.  
 
 ```bash
 # Clone the PandasAI Agent repository
@@ -97,17 +75,9 @@ uv sync
 ```
 This command will read the `pyproject.toml` file and install all specified dependencies in a virtual environment managed by `uv`.
 
-Copy the client sse.py from utils to mcp package (Linux/Mac):
-```bash
-cp -r utils/sse.py .venv/lib/python3.10/site-packages/mcp/client/sse.py
-```
-OR for Windows:
-```bash
-cp -r utils\sse.py .venv\Lib\site-packages\mcp\client\sse.py
-```
 </details>
 
-### 4. Configure Environment Variables
+### 3. Configure Environment Variables
 <details>
 
 Get the API Key:
@@ -122,7 +92,7 @@ Add your API keys and any other required environment variables to the .env file.
 
 </details>
 
-### 5. Run Agent
+### 4. Run Agent
 <details>
 
 Run the agent using `uv`:
@@ -131,7 +101,7 @@ uv run 1-langchain-PandasAiAgent.py
 ```
 </details>
 
-### 6. Example
+### 5. Example
 <details>
 
 ```bash
