@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 # Load environment variables
 load_dotenv()
 
-base_url = "http://localhost:5555/devmode/exampleApplication/privkey/session1/sse"
+base_url = os.getenv("CORAL_SERVER_URL")
 params = {
     "waitForAgents": 1,
     "agentId": "pandasai_agent",
@@ -42,7 +42,7 @@ def get_tools_description(tools):
 def query_xlsx_with_llama(
     file_path: str,
     question: str,
-    api_base: str = "http://localhost:11434/v1",
+    api_base: str = "http://host.docker.internal:11434/v1",
     model: str = "llama3.1:latest"
 ) -> str:
     """
@@ -97,7 +97,7 @@ async def create_pandasai_agent(client, tools):
 
     model = ChatOllama(
         model="qwen3:latest",  
-        base_url="http://localhost:11434",  # default Ollama port
+        base_url="http://host.docker.internal:11434",  # default Ollama port
         temperature=0.7,
     )
 
