@@ -3,7 +3,7 @@
 The PandasAI Agent helps you answer data-related questions about Excel or CSV files using a local LLM (e.g., Llama 3.1/Qwen3) via PandasAI. Simply provide the file path and your natural language question—the agent will query the data and return the answer.
 
 ## Responsibility
-The PandasAI Agent enables natural language querying of tabular data (Excel/CSV) using a local LLM through PandasAI, making data analysis accessible and conversational.
+The PandasAI Agent enables natural language querying of tabular data (Excel/CSV) using a local LLM through PandasAI, making data analysis accessible and conversational
 
 ## Details
 - **Framework**: LangChain
