@@ -20,16 +20,17 @@ logger = logging.getLogger(__name__)
 # Load environment variables
 load_dotenv()
 
-base_url = os.getenv("CORAL_SERVER_URL")
+base_url = os.getenv("CORAL_SSE_URL")
+agentID = os.getenv("CORAL_AGENT_ID")
+
 params = {
-    "waitForAgents": 1,
-    "agentId": "pandasai_agent",
-    "agentDescription": """I am a `pandasai_agent`, responsible for answering data-related questions about Excel or CSV files using only the available tools..
+    # "waitForAgents": 1,
+    "agentId": agentID,
+    "agentDescription": """An agent responsible for answering data-related questions about Excel or CSV files using only the available tools..
                            You should let me know the file name and question."""
 }
 query_string = urllib.parse.urlencode(params)
 MCP_SERVER_URL = f"{base_url}?{query_string}"
-AGENT_NAME = "pandasai_agent"
 
 # Validate API keys
 if not os.getenv("OPENAI_API_KEY"):

@@ -1,8 +1,7 @@
 # Example environment variables for PandasAI Agent
-OPENAI_API_KEY=your_openai_api_key_here
-
-# for running on docker:
-CORAL_SERVER_URL=http://host.docker.internal:5555/devmode/exampleApplication/privkey/session1/sse
-
-# for running locally:
-CORAL_SERVER_URL = http://localhost:5555/devmode/exampleApplication/privkey/session1/sse
+OPENAI_API_KEY=
+# use for docker
+# <!-- CORAL_SSE_URL=http://host.docker.internal:5555/devmode/exampleApplication/privkey/session1/sse -->
+# use for local mode
+CORAL_SSE_URL = http://localhost:5555/devmode/exampleApplication/privkey/session1/sse
+CORAL_AGENT_ID="repo_doc_consistency_checker_agent"
