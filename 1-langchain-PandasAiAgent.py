@@ -32,10 +32,6 @@ params = {
 query_string = urllib.parse.urlencode(params)
 MCP_SERVER_URL = f"{base_url}?{query_string}"
 
-# Validate API keys
-if not os.getenv("OPENAI_API_KEY"):
-    raise ValueError("OPENAI_API_KEY is not set in environment variables.")
-
 def get_tools_description(tools):
     return "\n".join(f"Tool: {t.name}, Schema: {json.dumps(t.args).replace('{', '{{').replace('}', '}}')}" for t in tools)
     
@@ -43,7 +39,7 @@ def get_tools_description(tools):
 def query_xlsx_with_llama(
     file_path: str,
     question: str,
-    api_base: str = "http://host.docker.internal:11434/v1",
+    api_base: str = "http://localhost:11434/v1",
     model: str = "llama3.1:latest"
 ) -> str:
     """
@@ -98,7 +94,7 @@ async def create_pandasai_agent(client, tools):
 
     model = ChatOllama(
         model="qwen3:latest",  
-        base_url="http://host.docker.internal:11434",  # default Ollama port
+        base_url="http://localhost:11434/v1",  # default Ollama port
         temperature=0.7,
     )
 
