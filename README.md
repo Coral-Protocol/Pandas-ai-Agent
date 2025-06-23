@@ -1,6 +1,6 @@
 ## [PandasAI Agent](https://github.com/Coral-Protocol/Pandas-ai-Agent)
 
-The PandasAI Agent helps you answer data-related questions about Excel or CSV files using a local LLM (e.g., Llama 3.1/Qwen3) via PandasAI. Simply provide the file path and your natural language question—the agent will query the data and return the answer.
+The PandasAI Agent helps you answer data-related questions about Excel or CSV files using a local LLM (e.g., Llama4) via PandasAI. Simply provide the file path and your natural language question—the agent will query the data and return the answer.
 
 ## Responsibility
 The PandasAI Agent enables natural language querying of tabular data (Excel/CSV) using a local LLM through PandasAI, making data analysis accessible and conversational
@@ -8,7 +8,7 @@ The PandasAI Agent enables natural language querying of tabular data (Excel/CSV)
 ## Details
 - **Framework**: LangChain
 - **Tools used**: PandasAI Tools, Coral MCP Tools
-- **AI model**: Llama3.1/Qwen3 via Ollama
+- **AI model**: Llama4 via Ollama
 - **Date added**: 04/06/25
 - **Reference**: [PandasAI Agent](https://pandas-ai.com/)
 - **License**: MIT
@@ -34,8 +34,7 @@ PandasAI Agent uses Ollama to run local LLMs. Please make sure you have Ollama i
 **Step 2: Download Local model**
 
 ```bash
-ollama pull llama3.1:latest
-ollama pull qwen3:latest
+ollama pull llama4:latest
 ```
 
 **Step 3: Start Ollama Service**

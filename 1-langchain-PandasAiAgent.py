@@ -40,7 +40,7 @@ def query_xlsx_with_llama(
     file_path: str,
     question: str,
     api_base: str = "http://localhost:11434/v1",
-    model: str = "llama3.1:latest"
+    model: str = "llama4:latest"
 ) -> str:
     """
     Query an Excel file using a local LLM via PandasAI.
@@ -93,7 +93,7 @@ async def create_pandasai_agent(client, tools):
     ])
 
     model = ChatOllama(
-        model="qwen3:latest",  
+        model="llama4:latest",  
         base_url="http://localhost:11434/v1",  # default Ollama port
         temperature=0.7,
     )
